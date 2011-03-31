@@ -957,10 +957,24 @@ int main(int argc, char* argv[]) {
 
 	// Music and sounds
 	waitingMusic = Mix_LoadMUS("think.mp3");
+	if(!waitingMusic)
+		nosound = true;
+
 	bounceSound = Mix_LoadMUS("bounce.mp3");
+	if(!bounceSound)
+		nosound = true;
+
 	absorbSound = Mix_LoadMUS("absorb.aif");
+	if(!absorbSound)
+		nosound = true;
+
 	music = Mix_LoadWAV("music.wav");
+	if(!music)
+		nosound = true;
+
 	winnerSound = Mix_LoadWAV("winner.wav");
+	if(!winnerSound)
+		nosound = true;
 
 	// Font
 	TTF_Init();
@@ -970,11 +984,28 @@ int main(int argc, char* argv[]) {
 
 	// Images
 	background = loadImage("sprites/bg.png");
+	if(!background)
+		retro = true;
+
 	blue = loadImage("sprites/blue.png");
+	if(!blue)
+		retro = true;
+
 	gray = loadImage("sprites/gray.png");
+	if(!gray)
+		retro = true;
+
 	orange = loadImage("sprites/orange.png");
+	if(!orange)
+		retro = true;
+
 	purple = loadImage("sprites/purple.png");
+	if(!purple)
+		retro = true;
+
 	red = loadImage("sprites/red.png");
+	if(!red)
+		retro = true;
 
 	// seed rand
 	srand(SDL_GetTicks());
