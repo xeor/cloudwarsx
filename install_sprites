@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo " * Downloading sprites..."
+wget --no-check-certificate https://github.com/downloads/bondehagen/CloudWars/tg11hp-simulator-1_02.zip
+unzip tg11hp-simulator-1_02.zip
+rm tg11hp-simulator-1_02.*
