@@ -32,7 +32,7 @@ int Winner = 0;
 int timeLimit;
 int limit;
 int defaultTimeLimit = 5;
-float absorb = 10.0; // TODO: 1.0;
+float absorb = 1.0; // TODO: 1.0;
 const int MAX_CLOUDS = 50;
 int startClouds = 20;
 int vaporStart = 1000;
@@ -1281,7 +1281,8 @@ int main(int argc, char* argv[]) {
 			if(cloud[i]->alive) {
 				for(int j = 0; j < MAX_CLOUDS; j++) {
 					if(cloud[j]->alive) {
-						if(checkCollision(*cloud[i], *cloud[j] )) {
+                        if (i == j) continue;
+						while(checkCollision(*cloud[i], *cloud[j] )) {
 							if(cloud[i]->vapor < cloud[j]->vapor) {
 								cloud[i]->vapor -= absorb;
 								cloud[j]->vapor += absorb;
