@@ -408,8 +408,8 @@ void wind(int player, int x, int y) {
 
 		// The vector [(x / radius)*5, (y / radius)*5] is added to the velocity
 		// of the thunderstorm.
-		cloud[player]->vx = (x / cloud[player]->radius()) * 5;
-		cloud[player]->vy = (y / cloud[player]->radius()) * 5;
+		cloud[player]->vx += (x / cloud[player]->radius()) * 5;
+		cloud[player]->vy += (y / cloud[player]->radius()) * 5;
 
 		// The vector [wx, wy] is calculated as [x / strength, y / strength].
 		float wx = x / strength;
