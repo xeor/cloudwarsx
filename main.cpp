@@ -32,7 +32,7 @@ int Winner = 0;
 int timeLimit;
 int limit;
 int defaultTimeLimit = 5;
-float absorb = 1.0; // TODO: 1.0;
+float absorb = 1.0;
 const int MAX_CLOUDS = 50;
 int startClouds = 20;
 int vaporStart = 1000;
@@ -345,7 +345,7 @@ Cloud *cloud[MAX_CLOUDS];
 ////////////////////////////////////////////////////////////////////////////////
 
 void usage() {
-	std::cout << "Usage: ./clodwarsx -m [deathmatch, timelimit] -1 [ai, human] -2 [ai, human]" << std::endl;
+	std::cout << "Usage: ./cloudwarsx -m [deathmatch, timelimit] -1 [ai, human] -2 [ai, human]" << std::endl;
 	std::cout << "\t-m gamemode\tdeathmatch / timelimit" << std::endl;
 	std::cout << "\t-s seconds\ttime limit in seconds" << std::endl;
 	std::cout << "\t-1 ai / human\tplayer 1" << std::endl;
