@@ -243,7 +243,13 @@ Cloud::Cloud(float pX, float pY, float vX, float vY, float V) {
 	vx = vX;
 	vy = vY;
 	vapor = V;
-	SDL_Surface *cloudImage = NULL;
+	cloudImage = NULL;
+	playerName = NULL;
+	vaporAmount = NULL;
+	velocityX = NULL;
+	velocityY = NULL;
+	positionX = NULL;
+	positionY = NULL;
 }
 
 Cloud::~Cloud() {
