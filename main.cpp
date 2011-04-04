@@ -426,7 +426,7 @@ void wind(int player, int x, int y) {
 		int vy = cloud[player]->vy;
 
 		// A new raincloud is spawned with vapor equal to strength
-		float raincloud_radius = strength;
+		float raincloud_radius = sqrt(strength);
 
 		// The distance to spawn the new raincloud at is calculated as:
 		// (int)((storm_radius + raincloud_radius) * 1.1)
@@ -444,7 +444,7 @@ void wind(int player, int x, int y) {
 
 		for(int i = 0; i < MAX_CLOUDS; i++) {
 			if(!cloud[i]->alive) {
-				cloud[i] = new Cloud(cpx, cpy, cvx, cvy, raincloud_radius);
+				cloud[i] = new Cloud(cpx, cpy, cvx, cvy, strength);
 				cloud[i]->alive = true;
 				cloud[i]->type = raincloud;
 				cloud[i]->color = "gray";
