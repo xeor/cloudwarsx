@@ -3,7 +3,7 @@ README
 This is an implementation of the game to The Gatherings Hardcore Programming Compo.
   http://www.gathering.org/tg11/en/creative/competitions/hardcore-programming/
 
-"In the game, every player controls a thunderstorm, and the goal is to becomme
+"In the game, every player controls a thunderstorm, and the goal is to become
 the biggest thunderstorm by absorbing vapor from clouds and other players."
 
 Description of the original game can be found here:
@@ -38,7 +38,7 @@ The support thread for the original game and AI-bots is:
 
 INSTALL
 
-The game has the fowling dependencies:
+The game has the following dependencies:
 - SDL
 - SDL_gfx
 - SDL_image
@@ -57,7 +57,7 @@ make
 
 RUN
 
-Usage: ./clodwarsx -m [deathmatch, timelimit] -1 [ai, human] -2 [ai, human]
+Usage: ./cloudwarsx -m [deathmatch, timelimit] -1 [ai, human] -2 [ai, human]
   -m gamemode   - deathmatch / timelimit
   -s seconds    - time limit in seconds
   -1 ai / human - player 1
