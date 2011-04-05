@@ -2,6 +2,8 @@
 
 import socket
 import sys
+import math
+import time
 
 class AI:
 
@@ -25,7 +27,7 @@ class AI:
 		self.s.send("NAME %s" % (nick,))
 
 	def start(self):
-		print "Waiting on server start..."
+		print "Waiting on start from server..."
 		while 1:
 			ready = self.s.recv(4096)
 			if 'START' in ready:
@@ -35,6 +37,18 @@ class AI:
 	def wind(self, x, y):
 		print "Sending WIND", x, y
 		self.s.send('WIND %s %s' % (x,y))
+		'''
+		while 1:
+			status = self.s.recv(1024)
+			if "OK" in status:
+				print "WIND OK"
+				return True
+				break
+			if "IGNORE" in status:
+				print "WIND IGNORE"
+				return False
+				break
+		'''
 
 	def getState(self):
 		print "Sending GET_STATE"
@@ -54,8 +68,13 @@ class AI:
 		state["rainclouds"] = []
 		state["thunderstorms"] = []
 
+		#print 'raw', raw
+
 		for i in raw:
 			l = i.split()
+
+			if len(l) == 0:
+				continue 
 
 			if l[0] == "BEGIN_STATE":
 				state["interation"] = int(l[1])
@@ -81,4 +100,17 @@ class AI:
 					"vapor": float(l[5]),
 					})
 
+		try:
+			if state.get("you", False):
+				state["me"] = state["thunderstorms"][state["you"]]
+				del state["thunderstorms"][state["you"]]
+			else:
+				state["me"] = "None"
+		except IndexError:
+			pass
+
+		self.state = state
 		return state
+
+	def sleep(self, sec=0.5):
+		time.sleep(sec)
