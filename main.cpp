@@ -1126,9 +1126,9 @@ int main(int argc, char* argv[]) {
 
 			if((player1 == "AI") && (player2 == "AI")) {
 				winner = TTF_RenderText_Solid(fontWaiting, waitingP1.c_str(), textColor);
-				drawSurface((width/2)-waitingP1.length()*7.5, height/2+20, winner, screen);
+				drawSurface((width/2)-waitingP1.length()*7.5, height/2-20, winner, screen);
 				winner = TTF_RenderText_Solid(fontWaiting, waitingP2.c_str(), textColor);
-				drawSurface((width/2)-waitingP2.length()*7.5, height/2-20, winner, screen);
+				drawSurface((width/2)-waitingP2.length()*7.5, height/2+20, winner, screen);
 			} else if(player1 == "AI") {
 				winner = TTF_RenderText_Solid(fontWaiting, waitingP1.c_str(), textColor);
 				drawSurface((width/2)-waitingP1.length()*7.5, height/2, winner, screen);
