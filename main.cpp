@@ -690,7 +690,15 @@ int server(void *data) {
 						x = atoi(v[1].c_str());
 						y = atoi(v[2].c_str());
 
-						wind(0, x, y);
+						if(wind(0, x, y)) {
+							strcpy(buffer, "IGNORE\n");
+							int msgLength = strlen(buffer);
+							SDLNet_TCP_Send(clientSocket[clientNumber], (void *)buffer, msgLength);
+						} else {
+							strcpy(buffer, "OK\n");
+							int msgLength = strlen(buffer);
+							SDLNet_TCP_Send(clientSocket[clientNumber], (void *)buffer, msgLength);
+						}
 					}
 				}
 			}
