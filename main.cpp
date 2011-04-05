@@ -384,9 +384,7 @@ bool checkCollision(Cloud &A, Cloud &B) {
 	return false;
 }
 
-void wind(int player, int x, int y) {
-
-	std::cout << "player " << player << ": WIND(" << x << ", " << y << ")" << std::endl;
+int wind(int player, int x, int y) {
 
 	// draw line
 	if(debug) {
@@ -402,10 +400,9 @@ void wind(int player, int x, int y) {
 	// This value is not allowed to be less than 1.0 or greater than vapor/2.
 	// If this happens, the WIND command is ignored.
 	if((strength < 1.0) || (strength > cloud[player]->vapor / 2)) {
-		//std::cout << "IGNORE" << std::endl;
-
 		if(debug)
 			COLOR = 0x00FF0000; // red
+		return 1; // IGNORE
 
 	} else {
 		// The vapor property of the thunderstorm will be reduced by strength.
@@ -458,11 +455,10 @@ void wind(int player, int x, int y) {
 			}
 		}
 
-		// TODO: return
 		if(debug)
 			COLOR = 0x0000FF00;
 
-		//std::cout << "OK" << std::endl;
+		return 0; // OK
 	}
 }
 
