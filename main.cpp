@@ -1050,28 +1050,19 @@ int main(int argc, char* argv[]) {
 
 	// Images
 	background = loadImage("sprites/bg.png");
-	if(!background)
-		retro = true;
-
 	blue = loadImage("sprites/blue.png");
-	if(!blue)
-		retro = true;
-
 	gray = loadImage("sprites/gray.png");
-	if(!gray)
-		retro = true;
-
 	orange = loadImage("sprites/orange.png");
-	if(!orange)
-		retro = true;
-
 	purple = loadImage("sprites/purple.png");
-	if(!purple)
-		retro = true;
-
 	red = loadImage("sprites/red.png");
-	if(!red)
+
+	if((!background) || (!blue) || (!gray) || (!orange) || (!purple) || (!red)) {
+		std::cout << "WARNING: Sprite(s) is missing! You can run: ./install_sprites to download the original graphics." << std::endl;
 		retro = true;
+	}
+
+	if(retro)
+		std::cout << "Going retro! (no gfx)" << std::endl;
 
 	// seed rand
 	srand(SDL_GetTicks());
