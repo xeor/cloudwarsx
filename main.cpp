@@ -112,8 +112,12 @@ void split(const std::string& s, char c, std::vector<std::string>& v) {
 
 // only 32-bit pixels
 void setPixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
-	Uint8 *target_pixel = (Uint8 *)surface->pixels + y * surface->pitch + x * 4;
-	*(Uint32 *)target_pixel = pixel;
+	if((x > width) || (x < 0) || (y < 0) || (y > height)) {
+		//std::cout << "hit: " << x << " " << y << std::endl;
+	} else {
+		Uint8 *target_pixel = (Uint8 *)surface->pixels + y * surface->pitch + x * 4;
+		*(Uint32 *)target_pixel = pixel;
+	}
 }
 
 // Draw line
