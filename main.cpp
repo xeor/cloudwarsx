@@ -618,12 +618,7 @@ int server(void *data) {
 
 					if(std::string::npos != s.find(" ")) {
 						split(s, ' ', v);
-						std::cout << "1: " << v[0] << std::endl;
-						std::cout << "2: " << v[1] << std::endl;
-						if(v.size() == 3)
-							std::cout << "3: " << v[2] << std::endl;
 					} else {
-						std::cout << "0: " << s << std::endl;
 						v.push_back(s);
 					}
 
