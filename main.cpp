@@ -13,6 +13,7 @@
 #include <vector>
 #include <algorithm>
 #include <iomanip>
+#include <fstream>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Config
@@ -27,15 +28,20 @@ bool fullscreen = false;
 bool retro = false;
 bool debug = false;
 bool nosound = false;
+bool level = false;
 
 int Winner = 0;
 int timeLimit;
 int limit;
 int defaultTimeLimit = 5;
+
 float absorb = 1.0;
 const int MAX_CLOUDS = 50;
 int startClouds = 20;
+int thunderCloud = 0;
+int rainCloud = 2;
 int vaporStart = 1000;
+
 int iteration = 0;
 bool done = false;
 
@@ -753,6 +759,52 @@ void createCloud(int i, int v) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Level functions
+////////////////////////////////////////////////////////////////////////////////
+
+void loadLevel(std::string filename) {
+	std::ifstream load(filename.c_str());
+	std::cout << "Loading file: " << filename << std::endl;
+
+	if(!load) {
+		std::cerr << "Error: " << filename << " levelfile not found!" << std::endl;
+		exit(1);
+	}
+
+	while(!load.eof()) {
+		std::string cloudType;
+		float px, py;
+		float vx, vy;
+		float vapor;
+
+		load >> cloudType;
+		load >> px;
+		load >> py;
+		load >> vx;
+		load >> vy;
+		load >> vapor;
+
+		if( (cloudType != "") || (px) || (py) || (vx) || (vy) || (vapor) ) {
+			if(cloudType == "THUNDERSTORM") {
+				cloud[thunderCloud] = new Cloud(px, py, vx, vy, vapor);
+				cloud[thunderCloud]->alive = true;
+				++thunderCloud;
+			}
+
+			else if(cloudType == "RAINCLOUD") {
+				cloud[rainCloud] = new Cloud(px, py, vx, vy, vapor);
+				cloud[rainCloud]->alive = true;
+				cloud[rainCloud]->type = raincloud;
+				cloud[rainCloud]->color = "gray";
+				++rainCloud;
+			}
+		}
+	}
+
+	load.close();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Main
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -771,8 +823,12 @@ int main(int argc, char* argv[]) {
 	}
 
 	char opt_char=0;
-	while((opt_char = getopt(argc, argv, "vndm:hs:1:2:rfx:y:p:")) != -1) {
+	while((opt_char = getopt(argc, argv, "l:vndm:hs:1:2:rfx:y:p:")) != -1) {
 		switch(opt_char) {
+			case 'l':
+				loadLevel(optarg);
+				level=true;
+				break;
 			case 'v':
 				std::cout << "version: " << version << std::endl;
 				exit(1);
@@ -892,14 +948,16 @@ int main(int argc, char* argv[]) {
 
 	// Player 1
 	if(player1 == "Human") {
-		createCloud(0, vaporStart);
+		if(!level)
+			createCloud(0, vaporStart);
 		cloud[0]->name = "Player 1";
 		cloud[0]->type = human;
 		cloud[0]->player = 1;
 		cloud[0]->color = "blue";
 		++playerCount;
 	} else if(player1 == "AI") {
-		createCloud(0, vaporStart);
+		if(!level)
+			createCloud(0, vaporStart);
 		cloud[0]->name = "AI";
 		cloud[0]->type = ai;
 		cloud[0]->player = 1;
@@ -911,14 +969,16 @@ int main(int argc, char* argv[]) {
 
 	// Player 2
 	if(player2 == "Human") {
-		createCloud(1, vaporStart);
+		if(!level)
+			createCloud(1, vaporStart);
 		cloud[1]->name = "Player 2";
 		cloud[1]->type = human;
 		cloud[1]->player = 2;
 		cloud[1]->color = "red";
 		++playerCount;
 	} else if(player2 == "AI") {
-		createCloud(1, vaporStart);
+		if(!level)
+			createCloud(1, vaporStart);
 		cloud[1]->name = "AI";
 		cloud[1]->type = ai;
 		cloud[1]->player = 2;
@@ -1016,11 +1076,15 @@ int main(int argc, char* argv[]) {
 	// seed rand
 	srand(SDL_GetTicks());
 
-	// init raindclouds randomly
-	for(int i = 2; i < startClouds; i++) {
-		createCloud(i, 0);
-		cloud[i]->type = raincloud;
-		cloud[i]->color = "gray";
+	// init rainclouds randomly
+	if(!level) {
+		for(int i = 2; i < startClouds; i++) {
+			createCloud(i, 0);
+			cloud[i]->type = raincloud;
+			cloud[i]->color = "gray";
+		}
+	} else {
+		startClouds = rainCloud;
 	}
 
 	for(int i = startClouds; i < MAX_CLOUDS; i++) {
